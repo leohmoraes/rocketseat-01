@@ -1,0 +1,11 @@
+{
+  "name": "rocketseat01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/leohmoraes/rocketseat-01.git",
+  "author": "Leo Moraes <moraes.leo@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
