@@ -80,11 +80,18 @@ function checkNameExists(req,res,next){
     return next();
 }
 
+function checkIndexExists(req,res,next) {
+    if(!nomes[req.params.index]){
+        return res.status(404).json({ error: "Nome não existe"});
+    }
+    return next();
+}
+
 server.get('/users/', (req,res) => {
     return res.json(nomes);
 });
 
-server.put('/users/:index', checkNameExists, (req,res) => {
+server.put('/users/:index', checkIndexExists, checkNameExists, (req,res) => {
     const { index } = req.params;
     const { nome } = req.body;
 
@@ -93,7 +100,7 @@ server.put('/users/:index', checkNameExists, (req,res) => {
     return res.json(nomes);
 });
 
-server.delete('/users/:index',(req,res) => {
+server.delete('/users/:index', checkIndexExists, (req,res) => {
     const { index } = req.params;
     const nome = nomes[index];
     nomes.splice(index,1);
