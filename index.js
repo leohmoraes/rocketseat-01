@@ -72,11 +72,19 @@ server.use((req,res, next) => {
 
 });
 
+function checkNameExists(req,res,next){
+    if(!req.body.nome) {
+        return res.status(400).json( { error: "Nome é requerido" });
+    }
+
+    return next();
+}
+
 server.get('/users/', (req,res) => {
     return res.json(nomes);
 });
 
-server.put('/users/:index', (req,res) => {
+server.put('/users/:index', checkNameExists, (req,res) => {
     const { index } = req.params;
     const { nome } = req.body;
 
@@ -93,7 +101,7 @@ server.delete('/users/:index',(req,res) => {
     return res.send(`Excluido o registro: ${nome}`);
 });
 
-server.post('/users/', (req,res) => {
+server.post('/users/', checkNameExists, (req,res) => {
     const { nome } = req.body;
     
     nomes.push(nome);
