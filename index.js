@@ -43,12 +43,13 @@ server.get('/teste6/:id', (req, res) => {
 
 //Video 06 Utilizando INSOMNIA
 
-const nomes = [ 'Leo', 'Diana', 'Agatha'];
+const nomes = [ 'Leo', 'Diana', 'Agatha', 'Luigi'];
 server.get('/teste7/:index', (req, res) => {
     console.log("teste7");
     const { index }= req.params;
     return res.json({ message: `Teste index: ${nomes[index]}`});
 });
+
 
 //Video Utilizando Nodemon
 // Request body = { "name": "Leo" }
@@ -57,5 +58,39 @@ server.get('/teste7/:index', (req, res) => {
 //     const { nome }= req.body;
 //     return res.json({ message: `Teste nome: ${nome}`});
 // });
+
+//CRUD  Create-Read-Update-Delete
+server.use(express.json());
+
+server.get('/users/', (req,res) => {
+    return res.json(nomes);
+});
+
+server.put('/users/:index', (req,res) => {
+    const { index } = req.params;
+    const { nome } = req.body;
+
+    nomes[index] = nome;
+
+    return res.json(nomes);
+});
+
+server.delete('/users/:index',(req,res) => {
+    const { index } = req.params;
+    const nome = nomes[index];
+    nomes.splice(index,1);
+    // return res.json(nomes);
+    return res.send(`Excluido o registro: ${nome}`);
+});
+
+server.post('/users/', (req,res) => {
+    const { nome } = req.body;
+    
+    nomes.push(nome);
+
+    return res.json(nomes);
+});
+
+
 
 server.listen(3000);
