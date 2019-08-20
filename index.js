@@ -62,6 +62,13 @@ server.get('/teste7/:index', (req, res) => {
 //CRUD  Create-Read-Update-Delete
 server.use(express.json());
 
+//Video 10 - MIDDLEWARE GLOBAL
+server.use((req,res, next) => {
+    console.log(`Metodo: ${req.method} . URL ${req.url}`);
+    // return res.json({ erro : "Erro"}); //cai fora!
+    return next(); //segue adiante
+});
+
 server.get('/users/', (req,res) => {
     return res.json(nomes);
 });
