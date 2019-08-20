@@ -64,9 +64,12 @@ server.use(express.json());
 
 //Video 10 - MIDDLEWARE GLOBAL
 server.use((req,res, next) => {
+    console.time("cronometro");
     console.log(`Metodo: ${req.method} . URL ${req.url}`);
     // return res.json({ erro : "Erro"}); //cai fora!
-    return next(); //segue adiante
+    next(); //segue adiante
+    console.timeEnd("cronometro");
+
 });
 
 server.get('/users/', (req,res) => {
